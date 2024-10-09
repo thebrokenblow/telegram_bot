@@ -1,0 +1,32 @@
+from telegram import Update
+from telegram.ext import Updater, CommandHandler, CallbackContext, MessageHandler, Filters
+
+
+def start(update=Update, context = CallbackContext):
+    update.message.reply_text("Hi User")
+
+def echo(update=Update, context = CallbackContext):
+    text = update.message.text
+
+    if text == "Переменная":
+        update.message.reply_text("Именованная область памяти в которой "
+                                  "хранится значение определённого типа")
+
+    if text == "Цикл":
+        update.message.reply_text("Цикл в программировании — это управляющая конструкция, "
+                                  "которая заставляет какой-то блок кода выполняться несколько раз.")
+
+    if text == "Условный оператор":
+        update.message.reply_text("Условный оператор — выражение, которое помогает реализовать ветвление. "
+                                  "Оно позволяет проверить заданное условие, а затем выполнить тот или иной алгоритм. "
+                                  "«Решение» зависит от истинности выбранного выражения")
+
+def main():
+    updater = Updater("7741392333:AAEZt49yto03oBGkaGSamJSzaT3-1VGs5NE")
+    dispatcher = updater.dispatcher
+    dispatcher.add_handler(CommandHandler("start", start))
+    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
+    updater.start_polling()
+    updater.idle()
+
+main()
